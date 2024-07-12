@@ -1,0 +1,9 @@
+Docker en tant que user (aide: docker -h)
+    Démarrer|Arrêter|Redémarrer un container: docker container start|stop|restart <container_name>
+    Supprimer un container: docker container rm <container_name>
+
+Portainer tourne sur le port 9000
+
+Portainer commandes (scripts présents dans /usr/local/bin)
+    portainer_stop | portainer_start | portainer_restart | portainer_update
+

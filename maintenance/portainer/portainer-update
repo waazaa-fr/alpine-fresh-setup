@@ -1,0 +1,11 @@
+#!/bin/sh
+
+SYSTEM_USER_NAME=$(id -un)
+if [[ "${SYSTEM_USER_NAME}" == 'root'  ]]
+then
+    echo "Ne doit pas être exécuté en tant que root. Passez utilisateur"
+    exit 1
+fi
+
+echo "Mise à jour si nécessaire de portainer..."
+cd ~/.compose/portainer/ && docker-compose pull && docker-compose up -d
