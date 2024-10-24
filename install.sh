@@ -50,7 +50,8 @@ echo "fuse" >> /etc/modules
 echo "net.ipv4.ping_group_range = 0 2147483647" >> /etc/sysctl.conf
 
 echo "---- Generate ssh key"
-ssh-keygen -t rsa -N '' -f /home/${user_name}/.ssh/id_rsa <<< y
+mkdir -p /root/.ssh
+ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa <<< y
 
 echo "---- The wheel group will be allowed to sudo"
 echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
