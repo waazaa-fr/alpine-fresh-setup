@@ -25,6 +25,3 @@ read -r group < ${ROOT_DIR}/user_group
 mkdir -pm 0777 /home/${name}/.config/pip/
 echo "[global]" > /home/${name}/.config/pip/pip.conf
 echo "break-system-packages = true" >> /home/${name}/.config/pip/pip.conf
-
-# Mise à jour pip
-pip install --upgrade pip
