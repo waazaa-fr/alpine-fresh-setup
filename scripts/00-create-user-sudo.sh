@@ -60,8 +60,6 @@ fi
 echo "Add user ${user_name} to group wheel"
 adduser ${user_name} wheel
 
-echo "Generate ssh key"
-ssh-keygen -t rsa -N '' -f /home/${user_name}/.ssh/id_rsa <<< y
 
 # Stockage de variable dans des fichiers individuels pour utilisation ultèrieure si besoin
 echo ${user_id} >> ${ROOT_DIR}/user_id

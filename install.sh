@@ -49,10 +49,6 @@ echo "fuse" >> /etc/modules
 # On autorise la commande ping aux users
 echo "net.ipv4.ping_group_range = 0 2147483647" >> /etc/sysctl.conf
 
-echo "---- Generate ssh key"
-mkdir -p /root/.ssh
-ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa <<< y
-
 echo "---- The wheel group will be allowed to sudo"
 echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
 
