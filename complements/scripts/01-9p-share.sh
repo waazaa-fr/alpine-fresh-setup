@@ -7,25 +7,21 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/../..
 
-echo "Voulez vous monter un share 9p ?"
-echo "(o/N)"
+echo "Mount an 9p share ?"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 
     exit
 esac
 
-echo "Quel est le mount tag (nom du share 9p) ?"
+echo "Mount tag (name of 9p share) ?"
 read mount_tag
 
-echo "Dans quel dossier le monter (ATTENTION: ce dossier va être créé) ?"
+echo "Where to mount (BE CAREFUL: this folder will be created) ?"
 read mount_folder
 
 mkdir -p ${mount_folder}
 chmod -R 0777 ${mount_folder}
 echo "${mount_tag}        ${mount_folder}            9p         trans=virtio,version=9p2000.L,_netdev,rw 0 0" >> /etc/fstab
 mount -a
-
-echo "Montage partage 9p" >> ${ROOT_DIR}/motd
-echo "    - Pour le montage auto regardez le fichier /etc/fstab" >> ${ROOT_DIR}/motd
-printf "\n" >> ${ROOT_DIR}/motd

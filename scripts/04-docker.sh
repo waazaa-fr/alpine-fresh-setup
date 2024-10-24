@@ -7,8 +7,8 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
-echo "Environnement docker ?"
-echo "(o/N)"
+echo "Docker ?"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 
@@ -26,17 +26,13 @@ rc-update add docker default
 service docker start
 adduser ${name} docker
 
-echo "Docker en tant que user (aide: docker -h)" >> ${ROOT_DIR}/motd
-echo "    Démarrer|Arrêter|Redémarrer un container: docker container start|stop|restart <container_name>" >> ${ROOT_DIR}/motd
-echo "    Supprimer un container: docker container rm <container_name>" >> ${ROOT_DIR}/motd
-printf "\n" >> ${ROOT_DIR}/motd
 
 ###############
 ## Portainer ##
 ###############
 
-echo "Installer Portainer ?"
-echo "(o/N)"
+echo "Portainer ?"
+echo "(y/N)"
 read portainer
 
 case ${portainer} in n|N) 
@@ -45,7 +41,7 @@ esac
 
 sudo -u ${name} mkdir -p /home/${name}/.compose/portainer/ /home/${name}/portainer/
 
-echo "Sur quel port coté hôte doit-il écouter ? (vide = defaut : 9000)"
+echo "Portainer Port listening ? (empty = defaut : 9000)"
 read portainer_port
 
 if [[ -z "${portainer_port}" ]]
@@ -56,8 +52,8 @@ fi
 # On doit vérifier que le port n'est pas utilisé
 while netstat -tulpn | grep :${portainer_port} >/dev/null;
 do
-    echo "Le port ${portainer_port} est déja occupé. Désignez-en un autre."
-    echo "Sur quel port coté hôte doit-il écouter ? (vide = defaut : 9000)"
+    echo "Port ${portainer_port} is already used. Choose another one."
+    echo "Portainer Port listening ? (empty = defaut : 9000)"
     read portainer_port
     if [[ -z "${portainer_port}" ]]
     then
@@ -82,9 +78,9 @@ cp ${ROOT_DIR}/maintenance/portainer/* /usr/local/bin/
 # On installe portainer via docker-compose ce qui permettra un update simplifié
 cd /home/${name}/.compose/portainer/ && sudo -u ${name} docker-compose pull && sudo -u ${name} docker-compose up -d 
 
-echo "Portainer tourne sur le port ${portainer_port}" >> ${ROOT_DIR}/motd
+echo "Portainer running on port ${portainer_port}" >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd
         
-echo "Portainer commandes (scripts présents dans /usr/local/bin)" >> ${ROOT_DIR}/motd
+echo "Portainer custom commands" >> ${ROOT_DIR}/motd
 echo "    portainer_stop | portainer_start | portainer_restart | portainer_update" >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd

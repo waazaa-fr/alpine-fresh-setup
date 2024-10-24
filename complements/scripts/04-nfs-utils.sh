@@ -7,8 +7,8 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/../..
 
-echo "Voulez vous installer le client NFS ?"
-echo "(o/N)"
+echo "NFS client ?"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 

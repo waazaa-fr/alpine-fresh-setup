@@ -7,8 +7,8 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
-echo "Envoi de mail ( mailx + msmtp) ?"
-echo "(o/N)"
+echo "Mail sending ( mailx + msmtp) ?"
+echo "(y/N)"
 read accept 
 
 case ${accept} in n|N) 
@@ -36,13 +36,13 @@ chmod +x /etc/local.d/msmtp-sendmail.start
 # On exécute manuellement pour la prmière fois, ça évitera de redémarrer
 /etc/local.d/msmtp-sendmail.start   
 
-echo "root: <email de root>" > /etc/aliases
-echo "${name}: <email de ${name}>" >> /etc/aliases
-echo "default: <email par defaut autrement>" >> /etc/aliases
+echo "root: <root email>" > /etc/aliases
+echo "${name}: <${name} email>" >> /etc/aliases
+echo "default: <others email>" >> /etc/aliases
 
-echo "Mail client pour envoi" >> ${ROOT_DIR}/motd
-echo "    1 - paramètrer le fichier /etc/msmtprc pour la connexion à votre fournisseur de mail" >> ${ROOT_DIR}/motd
-echo "    2 - modifier le fichier /etc/aliases pour indiquer les adresses emails des utilisateurs" >> ${ROOT_DIR}/motd
-echo "Une fois fait pour envoyer un email:" >> ${ROOT_DIR}/motd
-echo '    echo "Corps de mail" | mail -s "Sujet du mail" <mail du destinataire>' >> ${ROOT_DIR}/motd
+echo "Mail Client for smtp sending" >> ${ROOT_DIR}/motd
+echo "    1 - setup file /etc/msmtprc" >> ${ROOT_DIR}/motd
+echo "    2 - edit file /etc/aliases" >> ${ROOT_DIR}/motd
+echo "To send an email:" >> ${ROOT_DIR}/motd
+echo '    echo "Mail content" | mail -s "Subject of email" ${name}' >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd

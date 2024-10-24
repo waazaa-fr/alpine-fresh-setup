@@ -7,8 +7,8 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/../..
 
-echo "Voulez vous installer wireguard-tools ?"
-echo "(o/N)"
+echo "wireguard-tools ?"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 

@@ -8,7 +8,7 @@ echo "--------------------------------------------------------"
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
 echo "qemu-guest-agent ?"
-echo "(o/N)"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 
@@ -19,7 +19,3 @@ apk add qemu-guest-agent
 rc-update add qemu-guest-agent default
 service qemu-guest-agent start
 
-# Pour que la commande proxmox soit assurée dans alpine
-cp ${ROOT_DIR}/maintenance/shutdown /sbin/
-chmod 0777 /sbin/shutdown
-chmod a+x /sbin/shutdown

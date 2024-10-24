@@ -7,8 +7,8 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/../..
 
-echo "Voulez vous utiliser bash à la place de ash ?"
-echo "(o/N)"
+echo "bash instead of ash ?"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 
@@ -20,6 +20,7 @@ read -r name < ${ROOT_DIR}/user_name
 read -r group < ${ROOT_DIR}/user_group
 
 apk add bash bash-doc bash-completion ncurses
+touch /etc/profile.d/bash_completion.sh
 
 # On va créer .profile et .bashrc
 echo "exec /bin/bash" > /home/${name}/.profile

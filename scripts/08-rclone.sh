@@ -8,7 +8,8 @@ echo "--------------------------------------------------------"
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
 echo "rclone ?"
-echo "(o/N)"
+echo "https://rclone.org"
+echo "(y/N)"
 read accept 
 
 case ${accept} in n|N) 
@@ -20,7 +21,7 @@ read -r name < ${ROOT_DIR}/user_name
 read -r group < ${ROOT_DIR}/user_group
 
 
-curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+wget https://downloads.rclone.org/rclone-current-linux-amd64.zip
 unzip rclone-current-linux-amd64.zip
 cd rclone-*-linux-amd64
 cp rclone /usr/local/bin/
@@ -30,5 +31,5 @@ cd ..
 rm -R rclone-*
 
 echo "rclone" >> ${ROOT_DIR}/motd
-echo "    - Commande: rclone config" >> ${ROOT_DIR}/motd
+echo "    - Command: rclone config" >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd

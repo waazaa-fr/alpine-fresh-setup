@@ -7,8 +7,9 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
-echo "rdiff-backup (sauvegardes incrémentales) ?"
-echo "(o/N)"
+echo "rdiff-backup ?"
+echo "Source: https://github.com/rdiff-backup/rdiff-backup"
+echo "(y/N)"
 read accept 
 
 case ${accept} in n|N) 
@@ -22,18 +23,18 @@ read -r group < ${ROOT_DIR}/user_group
 # Installation des paquets essentiels
 apk add rdiff-backup
 mkdir -p /home/${name}/.rdiff/
-cat > /home/${name}/.rdiff/basic-exemple << EOF; $(echo)
+cat > /home/${name}/.rdiff/basic-example << EOF; $(echo)
 #!/bin/sh
-# A modifier
-SOURCE="/dossier/source/"
-DESTINATION="/dossier/destination/"
+# Setup
+SOURCE="/source/folder/"
+DESTINATION="/destination/folder/"
 
 runuser -u ${name} rdiff-backup ${SOURCE} ${DESTINATION}
 runuser -u ${name} rdiff-backup --force --remove-older-than 4B ${DESTINATION}
 EOF
 chown ${name}:${group} -R /home/${name}/.rdiff/
 
-echo "rdiff-backup - Sauvegardes incrémentales et versioning" >> ${ROOT_DIR}/motd
-echo "    - Créez votre script de sauvegarde en vous inspirant de /home/${name}/.rdiff/basic-exemple" >> ${ROOT_DIR}/motd
-echo "    - Rendez le exécutable et déposez le dans un des dossiers de /etc/periodic qui vous convient le mieux" >> ${ROOT_DIR}/motd
+echo "rdiff-backup - Incremental backups" >> ${ROOT_DIR}/motd
+echo "    - Create a script like /home/${name}/.rdiff/basic-example" >> ${ROOT_DIR}/motd
+echo "    - Make it executable and put it on a /etc/periodic subfolder" >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd

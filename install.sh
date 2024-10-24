@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION="v0.0.8"
+VERSION="v0.1.0"
 
 SYSTEM_USER_NAME=$(id -un)
 if [[ ${SYSTEM_USER_NAME} != 'root'  ]]
@@ -11,13 +11,13 @@ fi
 
 
 echo "-------------------------------------------------------------------------------"
-echo "        Script d'installation de base pour Alpine Linux. waazaa / ${VERSION} " 
+echo "        Install script for Alpine Linux. waazaa / ${VERSION} " 
 echo "   Support: https://github.com/waazaa-fr/alpine-fresh-setup/issues              "
 echo "   Licence: https://github.com/waazaa-fr/alpine-fresh-setup/blob/main/LICENSE   "
 echo "-------------------------------------------------------------------------------"
 
-echo "Ce script est fourni comme tel. Sans garantie de résultat et sous la Licence BSD 2-Clause Simplified License."
-echo "Vous comprenez et acceptez ces termes ? (o/N)"
+echo "This script is provided as is. No guarantee of results and under the BSD 2-Clause Simplified License."
+echo "Do you understand and accept these terms? (y/N)"
 read accept
 
 case ${accept} in n|N) 
@@ -29,7 +29,7 @@ esac
 #################################################################
 ##  Les dépôts de départ avec le community activé
 #################################################################
-echo "---- Modifications des dépôts"
+echo "---- Repository Changes"
 cat > /etc/apk/repositories << EOF; $(echo)
 https://dl-cdn.alpinelinux.org/alpine/v$(cut -d'.' -f1,2 /etc/alpine-release)/main/
 https://dl-cdn.alpinelinux.org/alpine/v$(cut -d'.' -f1,2 /etc/alpine-release)/community/
@@ -39,35 +39,48 @@ EOF
 #################################################################
 ##  Préparation du terrain
 #################################################################
-echo "---- Installation de paquets utiles: nano git sudo curl tree runuser ntfs-3g fuse"
-apk update > /dev/null && apk add nano git sudo curl tree runuser ntfs-3g fuse > /dev/null
+echo "---- Install base packages: nano git sudo curl tree htop rsync runuser ntfs-3g fuse"
+apk update > /dev/null && apk add nano git sudo curl tree htop rsync runuser ntfs-3g fuse > /dev/null
 
+# On active le module fuse
 modprobe fuse
+# On fait en sorte qu'il soit activé au boot
+echo "fuse" >> /etc/modules
+# On autorise la commande ping aux users
+echo "net.ipv4.ping_group_range = 0 2147483647" >> /etc/sysctl.conf
 
-echo "---- Le groupe wheel sera autorisé à sudo"
+# Pour que la commande proxmox soit assurée dans alpine
+cp maintenance/shutdown /sbin/
+chmod 0777 /sbin/shutdown
+chmod a+x /sbin/shutdown
+
+echo "---- Generate ssh key"
+ssh-keygen -t rsa -N '' -f /home/${user_name}/.ssh/id_rsa <<< y
+
+echo "---- The wheel group will be allowed to sudo"
 echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
 
-echo "---- Montage auto activé pour les partages distants listés dans /etc/fstab"
+echo "---- Auto-mount enabled for remote shares listed in /etc/fstab"
 rc-update add netmount boot
 
-echo "---- Activation de crond - Les scripts sont à placer dans les sous dossiers de /etc/periodic/"
+echo "---- Enabling crond - The scripts are to be placed in the subfolders of /etc/periodic/"
 rc-service crond start && rc-update add crond
 
 #################################################################
 ##  On récupère les sources sur github
 #################################################################
-echo "---- Récupération des scripts sur github"
+echo "---- Retrieving the scripts from github"
 if [ -d "workdir" ]
 then
     rm -R workdir/
 fi
-git clone --quiet https://github.com/waaman/alpine-fresh-setup.git workdir
+git clone --quiet https://github.com/waazaa-fr/alpine-fresh-setup.git workdir
 cd workdir
 ROOT_DIR=$(dirname $(readlink -f $0))
 chmod a+x scripts/*.sh
 
-echo "Installation via https://github.com/waaman/alpine-fresh-setup/" >> motd
-echo "Ce pense bête se trouve dans /etc/motd" >> motd
+echo "Installation using https://github.com/waazaa-fr/alpine-fresh-setup/tree/main" >> motd
+echo "This memo is on /etc/motd" >> motd
 printf "\n" >> motd
 
 
@@ -79,11 +92,11 @@ for f in ${ROOT_DIR}/scripts/*.sh; do
 done
 
 
-echo "---- Voulez vous le pas-à-pas de propositions des complémentaires ?"
-echo "(o/N)"
+echo "---- Do you want the step-by-step complementary proposals ?"
+echo "(y/N)"
 read complementaires
 
-case ${complementaires} in o|O) 
+case ${complementaires} in o|O|y|Y) 
     #################################################################
     ##  On exécute les complements/scripts un à un
     #################################################################
@@ -100,7 +113,7 @@ cp ${ROOT_DIR}/motd /etc/motd
 #################################################################
 ##  Ménage
 #################################################################
-echo "---- Ménage"
+echo "---- Cleanup"
 cd .. && rm -R workdir/ install.sh
 
 

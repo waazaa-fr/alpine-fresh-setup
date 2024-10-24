@@ -7,34 +7,34 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
-echo "Nom de l'utilisateur à créer: "
+echo "Your username: "
 read user_name
 # Vérifications de saisie
 while id ${user_name} &>/dev/null;
 do
-    echo "Cet utilisateur existe déja."
-    echo "Nom de l'utilisateur à créer: (Ctrl+c pour annuler)"
+    echo "This user already exists."
+    echo "Your username: (Ctrl+c to cancel)"
     read user_name
 done
 
-echo "Son id: (vide = defaut: 99)"
+echo "User Id:"
 read user_id
 # Vérifications de saisie
 while getent passwd ${user_id} >/dev/null;
 do
-    echo "L'id ${user_id} est déja pris."
-    echo "Son id: (Ctrl+c pour annuler)"
+    echo "Id ${user_id} already used."
+    echo "Id: (Ctrl+c to cancel)"
     read user_id
 done
 
 
-echo "Son groupe: (vide = defaut: users)"
+echo "User Group:"
 read user_group
 # Vérifications de saisie
 while ! getent group ${user_group} >/dev/null;
 do
-    echo "Le groupe ${user_group} n'existe pas."
-    echo "Son groupe: (Ctrl+c pour annuler)"
+    echo "Group ${user_group} didn't exists."
+    echo "Group: (Ctrl+c to cancel)"
     read user_group
 done
 
@@ -57,16 +57,15 @@ if [[ -z ${user_id} ]] && [[ -z ${user_group} ]]
 fi
 
 
-echo "Ajout de l'utilisateur dans le groupe wheel"
+echo "Add user ${user_name} to group wheel"
 adduser ${user_name} wheel
+
+echo "Generate ssh key"
+ssh-keygen -t rsa -N '' -f /home/${user_name}/.ssh/id_rsa <<< y
 
 # Stockage de variable dans des fichiers individuels pour utilisation ultèrieure si besoin
 echo ${user_id} >> ${ROOT_DIR}/user_id
 echo ${user_group} >> ${ROOT_DIR}/user_group
 echo ${user_name} >> ${ROOT_DIR}/user_name
 
-
-echo "Votre utilisateur avec les droits sudo est: ${user_name}" >> ${ROOT_DIR}/motd
-echo "    Son home est /home/${user_name}" >> ${ROOT_DIR}/motd
-printf "\n" >> ${ROOT_DIR}/motd
 

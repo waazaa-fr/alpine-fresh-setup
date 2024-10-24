@@ -7,8 +7,8 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
-echo "SSHFS (montage de dossier distant via ssh) ?"
-echo "(o/N)"
+echo "SSHFS ?"
+echo "(y/N)"
 read accept 
 
 case ${accept} in n|N) 
@@ -19,6 +19,6 @@ esac
 # Installation des paquets essentiels
 apk add sshfs
 
-echo "SSHFS - Montage de dossiers distants via ssh" >> ${ROOT_DIR}/motd
-echo "    - Commande: sshfs <user>@<ip.distante>:/dossier/distant /dossier/local/" >> ${ROOT_DIR}/motd
+echo "SSHFS" >> ${ROOT_DIR}/motd
+echo "    - Command: sshfs <user>@<ip.target>:/target/folder /local/folder/" >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd

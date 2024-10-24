@@ -7,13 +7,13 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/../..
 
-echo "Voulez vous installer les paquets nécessaires aux compilations ?"
-echo "(o/N)"
+echo "Build tools ?"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 
     exit
 esac
 
-apk add build-base cmake
+apk add build-base cmake musl-dev linux-headers musl-locales
 

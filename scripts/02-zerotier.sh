@@ -7,8 +7,8 @@ echo "--------------------------------------------------------"
 
 ROOT_DIR=$(dirname $(readlink -f $0))/..
 
-echo "zerotier-one ?"
-echo "(o/N)"
+echo "zerotier-one v1.10.2 ?"
+echo "(y/N)"
 read accept
 
 case ${accept} in n|N) 
@@ -16,12 +16,19 @@ case ${accept} in n|N)
 esac
 
 modprobe tun
-apk add zerotier-one
-rc-update add zerotier-one default
-service zerotier-one start
 
-echo "ZEROTIER (aide: sudo zerotier-cli -h)" >> ${ROOT_DIR}/motd
-echo "    Rejoindre un rezal: sudo zerotier-cli join <identifiant-rezal>" >> ${ROOT_DIR}/motd
-echo "    Quitter un rezal:   sudo zerotier-cli leave <identifiant-rezal>" >> ${ROOT_DIR}/motd
-echo "    Lister les rezals:  sudo zerotier-cli listnetworks" >> ${ROOT_DIR}/motd
+wget https://dl-cdn.alpinelinux.org/alpine/v3.17/community/x86_64/zerotier-one-openrc-1.10.2-r0.apk
+wget https://dl-cdn.alpinelinux.org/alpine/v3.17/community/x86_64/zerotier-one-1.10.2-r0.apk
+apk add zerotier-one-1.10.2-r0.apk 
+apk add zerotier-one-openrc-1.10.2-r0.apk 
+rc-update add zerotier-one
+service zerotier-one start
+rm -R zerotier-one-*
+
+
+
+echo "ZEROTIER (help: sudo zerotier-cli -h)" >> ${ROOT_DIR}/motd
+echo "    Join network: sudo zerotier-cli join <network-id>" >> ${ROOT_DIR}/motd
+echo "    Leave network:   sudo zerotier-cli leave <network-id>" >> ${ROOT_DIR}/motd
+echo "    List networks:  sudo zerotier-cli listnetworks" >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd
