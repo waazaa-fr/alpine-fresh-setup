@@ -17,7 +17,7 @@ do
     read user_name
 done
 
-echo "User Id:"
+echo "User Id: (ex: 99)"
 read user_id
 # Vérifications de saisie
 while getent passwd ${user_id} >/dev/null;
@@ -28,7 +28,7 @@ do
 done
 
 
-echo "User Group:"
+echo "User Group: (ex: users)"
 read user_group
 # Vérifications de saisie
 while ! getent group ${user_group} >/dev/null;

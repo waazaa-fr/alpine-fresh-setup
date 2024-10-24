@@ -39,14 +39,17 @@ EOF
 #################################################################
 ##  Préparation du terrain
 #################################################################
-echo "---- Install base packages: nano git sudo curl tree htop rsync runuser ntfs-3g fuse"
-apk update > /dev/null && apk add nano git sudo curl tree htop rsync runuser ntfs-3g fuse > /dev/null
+echo "---- Install base packages: nano git sudo curl tree htop rsync runuser ntfs-3g fuse util-linux"
+apk update > /dev/null && apk add nano git sudo curl tree htop rsync runuser ntfs-3g fuse util-linux > /dev/null
 
 # On active le module fuse
 modprobe fuse
 # On fait en sorte qu'il soit activé au boot
 echo "fuse" >> /etc/modules
 # On autorise la commande ping aux users
+# De suite
+echo "0 2147483647" > /proc/sys/net/ipv4/ping_group_range
+# Et au boot
 echo "net.ipv4.ping_group_range = 0 2147483647" >> /etc/sysctl.conf
 
 echo "---- The wheel group will be allowed to sudo"

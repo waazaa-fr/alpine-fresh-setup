@@ -26,6 +26,7 @@ touch /etc/profile.d/bash_completion.sh
 echo "exec /bin/bash" > /home/${name}/.profile
 
 echo "source /etc/profile.d/bash_completion.sh" > /home/${name}/.bashrc
+echo "PATH=$PATH:/home/${name}/.local/bin" >> /home/${name}/.bashrc
 echo "alias dir='ls --color=never -alh'" >> /home/${name}/.bashrc
 echo "alias lsa='ls -alh'" >> /home/${name}/.bashrc
 echo "alias mkdir='mkdir --verbose'" >> /home/${name}/.bashrc    
@@ -37,6 +38,7 @@ chown ${name}:${group} /home/${name}/.bashrc /home/${name}/.profile
 echo "exec /bin/bash" > /root/.profile
 
 echo "source /etc/profile.d/bash_completion.sh" > /root/.bashrc
+echo "PATH=$PATH:/root/.local/bin" >> /root/.bashrc
 echo "alias dir='ls --color=never -alh'" >> /root/.bashrc
 echo "alias lsa='ls -alh'" >> /root/.bashrc
 echo "alias mkdir='mkdir --verbose'" >> /root/.bashrc
