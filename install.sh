@@ -5,7 +5,7 @@ VERSION="v0.1.0"
 SYSTEM_USER_NAME=$(id -un)
 if [[ ${SYSTEM_USER_NAME} != 'root'  ]]
 then
-    echo "ERREUR - Ne peut être exécuté que par root."
+    echo "ERROR - must be run as root."
     exit 1
 fi
 
