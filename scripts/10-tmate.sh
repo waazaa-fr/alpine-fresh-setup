@@ -27,3 +27,4 @@ cd tmate-2.4.0-static-linux-amd64/
 cp tmate /usr/local/bin/
 cd .. 
 rm -R tmate-2.4.0*
+
