@@ -72,7 +72,7 @@ fi
 git clone --quiet https://github.com/waazaa-fr/alpine-fresh-setup.git workdir
 cd workdir
 ROOT_DIR=$(dirname $(readlink -f $0))
-chmod a+x scripts/*.sh
+chmod a+x scripts/*.sh complements/scripts/*.sh
 
 # Pour que la commande proxmox soit assurée dans alpine
 cp maintenance/shutdown /sbin/
@@ -111,12 +111,15 @@ rm /etc/motd
 cp ${ROOT_DIR}/motd /etc/motd
 
 
+read -r name < ${ROOT_DIR}/user_name
+read -r group < ${ROOT_DIR}/user_group
+chown ${name}:${group} -R /home/${name} /home/${name}/*
+
 #################################################################
 ##  Ménage
 #################################################################
 echo "---- Cleanup"
 cd .. && rm -R workdir/ install.sh
-
 
 echo "-------------------- Terminé -----------------------"
 exit 0

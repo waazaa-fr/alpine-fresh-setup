@@ -84,3 +84,24 @@ printf "\n" >> ${ROOT_DIR}/motd
 echo "Portainer custom commands" >> ${ROOT_DIR}/motd
 echo "    portainer_stop | portainer_start | portainer_restart | portainer_update" >> ${ROOT_DIR}/motd
 printf "\n" >> ${ROOT_DIR}/motd
+
+
+
+################
+## Lazydocker ##
+################
+echo "Lazydocker ?"
+echo "Source: https://github.com/jesseduffield/lazydocker"
+echo "(y/N)"
+read lazydocker
+
+case ${lazydocker} in n|N) 
+    exit
+esac
+
+mkdir -pm 0777 /home/${name}/.config/lazydocker
+wget https://github.com/jesseduffield/lazydocker/releases/download/v0.23.3/lazydocker_0.23.3_Linux_x86_64.tar.gz
+tar xf lazydocker_0.23.3_Linux_x86_64.tar.gz
+cp lazydocker /usr/local/bin/
+cd .. 
+rm -R lazydocker LICENSE README.md 

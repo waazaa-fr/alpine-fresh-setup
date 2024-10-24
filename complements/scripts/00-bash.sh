@@ -33,7 +33,8 @@ echo "alias mkdir='mkdir --verbose'" >> /home/${name}/.bashrc
 echo 'export PS1="\[\e[31m\][\[\e[m\]\[\e[38;5;172m\]\u\[\e[m\]@\[\e[38;5;153m\]\h\[\e[m\] \[\e[38;5;214m\]\W\[\e[m\]\[\e[31m\]]\[\e[m\]\$ "' >> /home/${name}/.bashrc   
 echo 'export EDITOR="nano"' >> /home/${name}/.bashrc
 
-chown ${name}:${group} /home/${name}/.bashrc /home/${name}/.profile
+mkdir -pm 0777 /home/${name}/.config
+chown ${name}:${group} -R /home/${name}/.bashrc /home/${name}/.profile /home/${name}/.config
 
 echo "exec /bin/bash" > /root/.profile
 
