@@ -104,5 +104,5 @@ wget https://github.com/jesseduffield/lazydocker/releases/download/v0.23.3/lazyd
 tar xf lazydocker_0.23.3_Linux_x86_64.tar.gz
 cp lazydocker /usr/local/bin/
 cd .. 
-rm -R lazydocker LICENSE README.md
+rm -R lazydocker* LICENSE README.md
 
