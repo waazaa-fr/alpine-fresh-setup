@@ -79,6 +79,7 @@ cp maintenance/shutdown /sbin/
 chmod 0777 /sbin/shutdown
 chmod a+x /sbin/shutdown
 
+
 echo "Installation using https://github.com/waazaa-fr/alpine-fresh-setup/tree/main" >> motd
 echo "This memo is on /etc/motd" >> motd
 printf "\n" >> motd
