@@ -49,11 +49,6 @@ echo "fuse" >> /etc/modules
 # On autorise la commande ping aux users
 echo "net.ipv4.ping_group_range = 0 2147483647" >> /etc/sysctl.conf
 
-# Pour que la commande proxmox soit assurée dans alpine
-cp maintenance/shutdown /sbin/
-chmod 0777 /sbin/shutdown
-chmod a+x /sbin/shutdown
-
 echo "---- Generate ssh key"
 ssh-keygen -t rsa -N '' -f /home/${user_name}/.ssh/id_rsa <<< y
 
@@ -78,6 +73,11 @@ git clone --quiet https://github.com/waazaa-fr/alpine-fresh-setup.git workdir
 cd workdir
 ROOT_DIR=$(dirname $(readlink -f $0))
 chmod a+x scripts/*.sh
+
+# Pour que la commande proxmox soit assurée dans alpine
+cp maintenance/shutdown /sbin/
+chmod 0777 /sbin/shutdown
+chmod a+x /sbin/shutdown
 
 echo "Installation using https://github.com/waazaa-fr/alpine-fresh-setup/tree/main" >> motd
 echo "This memo is on /etc/motd" >> motd
