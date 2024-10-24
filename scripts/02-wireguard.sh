@@ -1,11 +1,11 @@
 #!/bin/sh
 
 echo "--------------------------------------------------------"
-echo "complements/scripts/05-wireguard.sh"
+echo "scripts/02-wireguard.sh"
 echo "--------------------------------------------------------"
 
 
-ROOT_DIR=$(dirname $(readlink -f $0))/../..
+ROOT_DIR=$(dirname $(readlink -f $0))/..
 
 echo "wireguard-tools ?"
 echo "(y/N)"

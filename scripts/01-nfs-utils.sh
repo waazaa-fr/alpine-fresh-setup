@@ -1,13 +1,13 @@
 #!/bin/sh
 
 echo "--------------------------------------------------------"
-echo "complements/scripts/04-nfs-utils.sh"
+echo "scripts/01-nfs-utils.sh"
 echo "--------------------------------------------------------"
 
 
-ROOT_DIR=$(dirname $(readlink -f $0))/../..
+ROOT_DIR=$(dirname $(readlink -f $0))/..
 
-echo "NFS client ?"
+echo "nfs-utils ?"
 echo "(y/N)"
 read accept
 

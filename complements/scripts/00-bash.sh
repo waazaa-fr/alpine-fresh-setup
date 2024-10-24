@@ -19,7 +19,7 @@ esac
 read -r name < ${ROOT_DIR}/user_name
 read -r group < ${ROOT_DIR}/user_group
 
-apk add bash bash-doc bash-completion ncurses
+apk add bash bash-doc bash-completion ncurses util-linux-bash-completion
 touch /etc/profile.d/bash_completion.sh
 
 # On va créer .profile et .bashrc
