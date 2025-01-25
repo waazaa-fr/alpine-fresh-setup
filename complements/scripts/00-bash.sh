@@ -30,7 +30,7 @@ echo "PATH=$PATH:/home/${name}/.local/bin" >> /home/${name}/.bashrc
 echo "alias dir='ls --color=never -alh'" >> /home/${name}/.bashrc
 echo "alias lsa='ls -alh'" >> /home/${name}/.bashrc
 echo "alias mkdir='mkdir --verbose'" >> /home/${name}/.bashrc    
-echo 'export PS1="\[\e[31m\][\[\e[m\]\[\e[38;5;172m\]\u\[\e[m\]@\[\e[38;5;153m\]\h\[\e[m\] \[\e[38;5;214m\]\W\[\e[m\]\[\e[31m\]]\[\e[m\]\$ "' >> /home/${name}/.bashrc   
+echo 'export PS1="\[\e[31m\][\[\e[m\]\[\e[38;5;172m\]\u\[\e[m\]@\[\e[38;5;153m\]\h\[\e[m\] \[\e[38;5;214m\]\W\[\e[m\]\[\e[31m\]]\[\e[m\]\\$ "' >> /home/${name}/.bashrc
 echo 'export EDITOR="nano"' >> /home/${name}/.bashrc
 
 mkdir -pm 0777 /home/${name}/.config
